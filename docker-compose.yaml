@@ -1,0 +1,35 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: node server.js
+    # volumes:
+    #   - .:/usr/app/
+    #   - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysqldb
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_PORT: 3306
+  mysqldb:
+    image: mysql:8.0.12
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '4000:3306'
+    # expose:
+      # Opens port 3306 on the container
+      # - '3306'
+      # Where our data will be persisted
+    volumes:
+      - ./mysql-dump:/var/lib/mysql

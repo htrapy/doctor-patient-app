@@ -120,7 +120,7 @@ routes.getUsers = {
                     constants.USER_ROLES.PATIENT,
                     constants.USER_ROLES.ASSISTANT,
                     constants.USER_ROLES.CLINIC,
-                    constants.USER_ROLES.DOCTORS,
+                    constants.USER_ROLES.DOCTOR,
                 ]
             }
         },
