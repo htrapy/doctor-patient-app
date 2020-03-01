@@ -36,7 +36,7 @@ routes.newAppointment = {
                 clinic_id: Joi.number().required(),
                 title: Joi.string().max(50).required(),
                 description: Joi.string().optional().default(null),
-                scheduled_datetime: Joi.date().raw().required(),
+                scheduled_datetime: Joi.date().raw().required().description("Format: YYYY-MM-DD HH:mm:ss"),
             },
             failAction: universalFunc.failActionFunction
         },
