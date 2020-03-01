@@ -1,0 +1,6 @@
+.DS_store
+*.DS_Store
+*.idea
+/node_modules
+*.log
+uploads/

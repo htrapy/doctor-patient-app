@@ -1,0 +1,46 @@
+{
+    "PORT": 3000,
+    "EXPORT_PORT": 3030,
+    "PROJECT_NAME": "",
+    "databaseSettings": {
+        "host" : "",
+        "user"    : "",
+        "password" : "",
+        "database" : "",
+        "mysqlPORT" : ""
+    },
+    "slaveDatabaseSettings": {
+        "host" : "SLAVE_MYSQL_HOST",
+        "user"    : "SLAVE_MYSQL_USER",
+        "password" : "SLAVE_MYSQL_PASSWORD",
+        "database" : "SLAVE_MYSQL_DATABASE",
+        "mysqlPORT" : "SLAVE_MYSQL_PORT"
+    },
+    "s3": {
+        "peoplesoft_bucket": "",
+        "bucket": "",
+        "region": "",
+        "service": "s3",
+        "access_key_id": "",
+        "secret_access_key": "",
+        "folder": {
+            "error_files": "error_files",
+            "success_files": "success_files"
+        },
+        "signedExpTime": 7200
+    },
+    "sqs": {
+        "queue_region": "",
+        "download_queue": "",
+        "upload_queue": ""
+    },
+    "apiLink": "http://scopeworker-api:1337",
+    "apiLink2": "http://scopeworker-upload:1337",
+    "apiLink3": "http://scopeworker-export-service:1337",
+    "vendorURL": "",
+    "companyURL": "",
+    "adminURL": "",
+    "secret_key":"JDG#2@1SD98WQ:?11!Q",
+    "base_url": "",
+    "base_url_export": ""
+}
