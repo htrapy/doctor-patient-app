@@ -139,7 +139,7 @@ routes.shareDocToDoctor = {
             .catch(universalFunc.errorHandler);
     },
     options: {
-        description: 'Add a document to an appointment',
+        description: 'share a document to a doctor',
         tags: ['api', 'document'],
         auth: {
             mode: 'required',
@@ -216,7 +216,7 @@ routes.getDocumentSharedAccess = {
             .catch(universalFunc.errorHandler);
     },
     options: {
-        description: 'Get all the sharing for a document',
+        description: 'Appointments and doctors to whom a document is shared',
         tags: ['api', 'document'],
         auth: {
             mode: 'required',

@@ -91,7 +91,8 @@ const downloadDoc = async function (request, h) {
         if (access.length == 0) {
             return h.response({
                 message: constants.responseMessages.FORBIDDEN, 
-                status: constants.responseFlags.SHOW_ERROR_MESSAGE
+                status: constants.responseFlags.SHOW_ERROR_MESSAGE,
+                data: {}
             });
         }
     } 
@@ -103,7 +104,8 @@ const downloadDoc = async function (request, h) {
     if (!document) {
         return h.response({
             message: constants.responseMessages.NOT_FOUND, 
-            status: constants.responseFlags.SHOW_ERROR_MESSAGE
+            status: constants.responseFlags.SHOW_ERROR_MESSAGE,
+            data: {}
         });
     }
     
@@ -112,7 +114,8 @@ const downloadDoc = async function (request, h) {
         
         return h.response({
             message: constants.responseMessages.NOT_FOUND, 
-            status: constants.responseFlags.SHOW_ERROR_MESSAGE
+            status: constants.responseFlags.SHOW_ERROR_MESSAGE,
+            data: {}
         });
     }
     const fileStream = fs.createReadStream(document.path)

@@ -60,7 +60,6 @@ const newAppointment = async function (payload) {
 }
 
 const getClinicAppointments = async function (payload) {
-    // todo: check clinic user access
     const clinicUser = await services.clinics.getClinicUser(payload.clinic_id, payload.userDetails.id);
     if (!clinicUser) {
         throw {

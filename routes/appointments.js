@@ -63,7 +63,7 @@ routes.getAppointments = {
             .catch(universalFunc.errorHandler);
     },
     config: {
-        description: 'Get appointments',
+        description: 'Get appointments for doctors and assistants',
         tags: ['api', 'clinic', 'appointments'],
         auth: {
             mode: 'required',
@@ -72,8 +72,7 @@ routes.getAppointments = {
             access: {
                 scope: [
                     constants.USER_ROLES.DOCTOR,
-                    constants.USER_ROLES.ASSISTANT,
-                    constants.USER_ROLES.CLINIC,
+                    constants.USER_ROLES.ASSISTANT
                 ]
             }
         },
