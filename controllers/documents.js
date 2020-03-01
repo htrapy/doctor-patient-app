@@ -2,6 +2,7 @@ const services = require('../services');
 const constants = require('../utils/constants');
 const Path = require('path')
 const fs = require('fs');
+const util = require('util')
 
 
 const newDocuments = async function (payload) {
@@ -10,13 +11,16 @@ const newDocuments = async function (payload) {
     const dir = Path.resolve(`uploads/${payload.userDetails.id}/`);
     const path = Path.resolve(`${dir}/${Date.now()}`);
     const filename = payload.file.hapi.filename;
+    const mime = payload.file.hapi.headers['content-type']
+    const checkIfExist = util.promisify(fs.exists);
 
-    if (!(fs.existsSync(dir))){
+    if (!(await checkIfExist(dir))){
+
         await fs.promises.mkdir(dir, { recursive: true });
     }
     await fs.promises.writeFile(path, buffer);
 
-    return services.documents.newDoc(payload.userDetails.id, title, filename, path);
+    return services.documents.newDoc(payload.userDetails.id, title, filename, path, mime);
 }
 
 const getMyDocs = async function(payload) {
@@ -79,20 +83,44 @@ const deleteDocAccess = async function (payload) {
     return;
 }
 
-const downloadDoc = async function (payload) {
-    if (payload.userDetails.role = constants.USER_ROLES.DOCTOR) {
+const downloadDoc = async function (request, h) {
+    const payload = request.query;
+    payload.userDetails = request.auth.credentials.userDetails;
+    if (payload.userDetails.role == constants.USER_ROLES.DOCTOR) {
         const access = await services.documents.getDocumentSharings(payload.userDetails.id, null, payload.document_id);
         if (access.length == 0) {
-            throw {
+            return h.response({
                 message: constants.responseMessages.FORBIDDEN, 
                 status: constants.responseFlags.SHOW_ERROR_MESSAGE
-            };
+            });
         }
     } 
 
     const patient_id = (payload.userDetails.role == constants.USER_ROLES.PATIENT && payload.userDetails.id) || null;
     let document = await services.documents.getDocs(patient_id, payload.document_id);
-    return document[0];
+    document = document[0];
+    
+    if (!document) {
+        return h.response({
+            message: constants.responseMessages.NOT_FOUND, 
+            status: constants.responseFlags.SHOW_ERROR_MESSAGE
+        });
+    }
+    
+    const checkIfExist = util.promisify(fs.exists);
+    if (!(await checkIfExist(document.path))){
+        
+        return h.response({
+            message: constants.responseMessages.NOT_FOUND, 
+            status: constants.responseFlags.SHOW_ERROR_MESSAGE
+        });
+    }
+    const fileStream = fs.createReadStream(document.path)
+    return h.response(fileStream)
+            .type(document.mime)
+            .header('Content-type', document.mime)
+            .header('Content-length', fileStream.length)
+            .header('Content-Disposition', `attachment; filename="${document.filename}"`);
 }
   
 module.exports = {

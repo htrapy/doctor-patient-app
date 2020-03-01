@@ -18,7 +18,7 @@ module.exports = function(sequelize, Sequelize) {
         });
 
         cusers.belongsTo(models.users, {
-            as: 'cusers',
+            as: 'users',
             foreignKey: 'user_id'
         });
     }

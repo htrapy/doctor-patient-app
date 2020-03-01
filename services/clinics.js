@@ -26,7 +26,7 @@ const getClinicUsers = async function(clinic_id, role) {
     include.push({
         model: Models.users,
         subQuery: false,
-        as: 'cusers',
+        as: 'users',
         required: true,
         attributes: [
             'id',
@@ -45,9 +45,24 @@ const getClinicUsers = async function(clinic_id, role) {
         raw
     }
 
-    return Models.clinic_users.findAndCountAll(options);
+    return Models.clinic_users.findAll(options);
+}
+
+const getClinicUser = async function(clinic_id, user_id) {
+    const where = {
+        clinic_id,
+        user_id
+    }
+    const attributes = [ 'clinic_id', 'user_id' ];
+
+    return Models.clinic_users.findOne({
+        where,
+        attributes,
+        raw
+    });
 }
 module.exports = {
     newClinicUsers,
     getClinicUsers,
+    getClinicUser
 }

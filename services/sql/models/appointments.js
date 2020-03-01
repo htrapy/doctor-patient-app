@@ -1,7 +1,7 @@
 const constants = require('../../../utils/constants');
 
 module.exports = function(sequelize, Sequelize) {
-    const cusers = sequelize.define('appointments', {  
+    const app = sequelize.define('appointments', {  
         id:{  
             type: Sequelize.BIGINT(20),
             primaryKey: true,
@@ -39,26 +39,26 @@ module.exports = function(sequelize, Sequelize) {
         }
     });
 
-    cusers.associate = function(models) {
-        cusers.belongsTo(models.users, {
+    app.associate = function(models) {
+        app.belongsTo(models.users, {
             foreignKey: 'clinic_id'
         });
 
-        cusers.belongsTo(models.users, {
+        app.belongsTo(models.users, {
             as: 'doctor',
             foreignKey: 'doctor_id'
         });
 
-        cusers.belongsTo(models.users, {
+        app.belongsTo(models.users, {
             as: 'assistant',
             foreignKey: 'assistant_id'
         });
 
-        cusers.belongsTo(models.users, {
+        app.belongsTo(models.users, {
             as: 'patient',
             foreignKey: 'patient_id'
         });
     }
 
-    return cusers;
+    return app;
 }

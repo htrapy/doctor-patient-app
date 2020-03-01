@@ -38,12 +38,22 @@ const newAppointment = async function (payload) {
         payload.assistant_id = payload.userDetails.id;
     }
 
-    // todo: check if clinic id matches with the creator in clinic users
-    // todo: check if clinic id matches with the doctor in clinic users
+    const isValidCreator = await services.clinics.getClinicUser(payload.clinic_id, payload.userDetails.id);
+    if (!isValidCreator) {
+        throw {
+            message: constants.responseMessages.FORBIDDEN, 
+            status: constants.responseFlags.FORBIDDEN
+        };
+    }
 
+    const isValidDoctor = await services.clinics.getClinicUser(payload.clinic_id, payload.doctor_id);
+    if (!isValidDoctor) {
+        throw {
+            message: constants.responseMessages.FORBIDDEN, 
+            status: constants.responseFlags.FORBIDDEN
+        };
+    }
 
-    // todo: check doctor, patient availability
-    // create appointment
     await services.appointments.newAppointment(payload);
     return;
 
@@ -51,11 +61,23 @@ const newAppointment = async function (payload) {
 
 const getClinicAppointments = async function (payload) {
     // todo: check clinic user access
+    const clinicUser = await services.clinics.getClinicUser(payload.clinic_id, payload.userDetails.id);
+    if (!clinicUser) {
+        throw {
+            message: constants.responseMessages.FORBIDDEN, 
+            status: constants.responseFlags.FORBIDDEN
+        }; 
+    }
 
     return services.appointments.getAppointments(payload.clinic_id, payload.doctor_id);
+} 
+
+const getMyAppointments = async function (payload) {
+    return services.appointments.getAppointments(payload.clinic_id, payload.doctor_id, payload.userDetails.id);
 } 
   
 module.exports = {
     newAppointment,
-    getClinicAppointments
+    getClinicAppointments,
+    getMyAppointments
 }

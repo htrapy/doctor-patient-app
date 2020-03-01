@@ -54,6 +54,21 @@ const findUsersById = async function(id, attributes) {
 
 const findUsers = async function (find, keys = []) {
     const where = find;
+
+    if (Array.isArray(where.user_ids) && where.user_ids.length > 0) {
+        where.id = {
+            [Op.in]: where.user_ids
+        }
+        delete where.user_ids;
+    }
+
+    if (Array.isArray(where.roles) && where.roles.length > 0) {
+        where.role = {
+            [Op.in]: where.roles
+        }
+        delete where.roles;
+    }
+
     const attributes = keys;
     return Models.users.findAll({ where, attributes, raw });
 }

@@ -33,7 +33,7 @@ const createUser = async function (payload) {
 
 const login = async function (payload) {
     const keysToFetch = [
-        'id', 'email', 'role', 'password'
+        'id', 'email', 'role', 'password', 'name'
     ]
 
     const oldUser = await services.users.findUser(payload.email, keysToFetch);
@@ -62,7 +62,9 @@ const login = async function (payload) {
         role: oldUser.role
     });
 
-    return { accessToken };
+    delete oldUser.password;
+    oldUser.accessToken = accessToken
+    return oldUser;
 }
 
 const logout  = async function (payload) {

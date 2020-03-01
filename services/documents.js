@@ -4,12 +4,13 @@ const Sequelize = Models.Sequelize;
 const sequelize = Models.sequelize;
 const raw = true;
 
-const newDoc = async function (user_id, title, filename, path) {
+const newDoc = async function (user_id, title, filename, path, mime) {
     const data = {
         user_id,
         title,
         filename,
-        path
+        path,
+        mime
     }
     const doc = await Models.uploaded_docs.create(data);
     return doc.dataValues;
@@ -34,7 +35,9 @@ const shareDoc = async function (patient_id, document_id, appointment_id, clinic
         clinic_id,
         doctor_id
     }
-    const doc = await Models.shared_docs.create(data);
+    const doc = await Models.shared_docs.bulkCreate([data], {
+        updateOnDuplicate: ['updated_at'],
+    });
     return doc.dataValues;
 }
 

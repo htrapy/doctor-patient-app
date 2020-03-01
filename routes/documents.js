@@ -65,7 +65,7 @@ routes.newDoc = {
             }
         },
         payload: {
-            maxBytes: constants.maxMasterFileUploadSize,
+            maxBytes: constants.MAX_FILE_SIZE,
             output: 'stream',
             parse: true,
             allow: 'multipart/form-data'
@@ -180,7 +180,7 @@ routes.getSharedDoctorsDocs = {
             .catch(universalFunc.errorHandler);
     },
     options: {
-        description: 'Get documents shared by a patient',
+        description: 'Get documents shared by a patient to a doctor',
         tags: ['api', 'document'],
         auth: {
             mode: 'required',
@@ -287,12 +287,7 @@ routes.deleteDocAccess = {
 routes.downloadDoc = {
     method: 'GET',
     path: '/patients/documents/download',
-    handler: function(request, h) {
-        request.query.userDetails = request.auth.credentials.userDetails;
-        return controllers.documents.downloadDoc(request.query)
-            .then(universalFunc.successHandler)
-            .catch(universalFunc.errorHandler);
-    },
+    handler: controllers.documents.downloadDoc,
     options: {
         description: 'Download Document',
         tags: ['api', 'document'],

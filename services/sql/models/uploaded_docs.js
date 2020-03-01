@@ -21,8 +21,12 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false,
         },
         filename: {
-            type: Sequelize.TEXT('medium'),
+            type: Sequelize.TEXT,
             allowNull: false,
+        },
+        mime: {
+            type: Sequelize.TEXT,
+            allowNull: true,
         }
     });
 

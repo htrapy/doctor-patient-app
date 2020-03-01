@@ -21,7 +21,7 @@ const getPatientAppointment = async function (patient_id, appointment_id) {
     return Models.appointments.findOne({ where, attributes, raw });
 }
 
-const getAppointments = async function (clinic_id, doctor_id) {
+const getAppointments = async function (clinic_id, doctor_id, patient_id) {
     const where = {}
 
     if (clinic_id) {
@@ -30,6 +30,10 @@ const getAppointments = async function (clinic_id, doctor_id) {
 
     if (doctor_id) {
         where.doctor_id = doctor_id
+    }
+
+    if (patient_id) {
+        where.patient_id = patient_id
     }
     const include = [];
     include.push(
@@ -80,7 +84,6 @@ const getAppointments = async function (clinic_id, doctor_id) {
     const options = {
         where,
         include,
-        // raw
     }
 
     return Models.appointments.findAll(options);

@@ -10,15 +10,18 @@ module.exports = function(sequelize, Sequelize) {
         },
         document_id: {  
             type: Sequelize.BIGINT(20),
-            allowNull: false
+            allowNull: false,
+            unique:'shared_uniq'
         },
         doctor_id:{  
             type: Sequelize.BIGINT(20),
-            allowNull: true
+            allowNull: true,
+            unique:'shared_uniq'
         },
         appointment_id:{  
             type: Sequelize.BIGINT(20),
-            allowNull: true
+            allowNull: true,
+            unique:'shared_uniq'
         },
         clinic_id:{  
             type: Sequelize.BIGINT(20),
@@ -28,6 +31,13 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.BIGINT(20),
             allowNull: true
         },
+    }, {
+        indexes: [
+            {
+                unique: true,
+                fields: ['document_id', 'doctor_id', 'appointment_id']
+            }
+        ]
     });
 
     sdocs.associate = function(models) {

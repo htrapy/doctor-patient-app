@@ -74,6 +74,48 @@ routes.getAppointments = {
                     constants.USER_ROLES.DOCTOR,
                     constants.USER_ROLES.ASSISTANT,
                     constants.USER_ROLES.CLINIC,
+                ]
+            }
+        },
+        validate: {
+            headers: universalFunc.authorizationHeaderObj,
+            query: {
+                doctor_id: Joi.number().optional(),
+                clinic_id: Joi.number().required()
+            },
+            failAction: universalFunc.failActionFunction
+        },
+        plugins: {
+            'hapi-swagger': {
+                payloadType: 'form',
+                responseMessages: swaggerResponse
+            }
+        },
+    },
+    
+};
+
+routes.getMyAppointments = {
+    method: 'GET',
+    path: '/patients/appointments',
+    handler: function(request, h) {
+        if (!request.query) {
+            request.query = {};
+        }
+        request.query.userDetails = request.auth.credentials.userDetails;
+        return controllers.appointments.getMyAppointments(request.query)
+            .then(universalFunc.successHandler)
+            .catch(universalFunc.errorHandler);
+    },
+    config: {
+        description: 'Get my appointments',
+        tags: ['api', 'clinic', 'appointments'],
+        auth: {
+            mode: 'required',
+            strategy: 'generalAuth',
+            payload: false,
+            access: {
+                scope: [
                     constants.USER_ROLES.PATIENT,
                 ]
             }
@@ -95,5 +137,4 @@ routes.getAppointments = {
     },
     
 };
-
 module.exports = Object.values(routes);

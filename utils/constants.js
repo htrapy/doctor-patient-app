@@ -11,13 +11,15 @@ module.exports.responseMessages = {
     INVALID_DOCTOR: 'Doctor doesnt exist in system',
     INVALID_DOCUMENT: 'Document not found in system',
     INVALID_DOCUMENT: 'Appointment not found in system',
+    NOT_FOUND: 'NOT_FOUND',
+    INVALID_USERS: 'Some users were not found in the system'
 }
 
 module.exports.responseFlags = {
     ACTION_COMPLETE: 200,
     PARAMETER_MISSING: 100,
     FORBIDDEN: 403,
-    SHOW_ERROR_MESSAGE: 499
+    SHOW_ERROR_MESSAGE: 499,
 }
 
 module.exports.swaggerDefaultResponseMessages = [
@@ -41,3 +43,5 @@ module.exports.SESSION_TIME_LIMIT = {
 }
 
 module.exports.AUTH_TOKEN_SECRET_KEY = 'helloworlddlrowolleh';
+
+module.exports.MAX_FILE_SIZE = 50 * 1024 * 1024;
