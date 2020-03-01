@@ -99,7 +99,6 @@ routes.logout = {
     
 };
 
-// todo: fix acl
 routes.getUsers = {
     method: 'GET',
     path: '/users',
