@@ -1,6 +1,10 @@
 const path = require('path');
 const Hapi = require('@hapi/hapi');
 
+process.env.NODE_CONFIG_DIR = 'config/';
+process.argv.NODE_APP_INSTANCE = '';
+config = require('config');
+
 const Routes = require('./routes');
 const Plugins = require('./plugins');
 const sqlSetup = require('./services/sql/setup');
@@ -9,7 +13,7 @@ const start = async function () {
 
     try {
         const server = Hapi.server({
-            port: process.env.PORT || 3000,
+            port: process.env.SERVER_PORT || 3000,
             routes: { cors: true, payload: { timeout: false } },
         });
 
