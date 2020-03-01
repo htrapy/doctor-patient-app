@@ -13,7 +13,7 @@ const start = async function () {
 
     try {
         const server = Hapi.server({
-            port: process.env.SERVER_PORT || 3000,
+            port: config.get('SERVER_PORT') || 3000,
             routes: { cors: true, payload: { timeout: false } },
         });
 

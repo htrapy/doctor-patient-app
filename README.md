@@ -4,7 +4,7 @@
 
 # Setup
 1. Create a database inside the mysql server
-2. Fill the file config/default.json
+2. Fill the file config/default.json (db creds and port to run on)
 3. npm install
 4. npm start
 

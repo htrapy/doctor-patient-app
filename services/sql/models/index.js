@@ -2,13 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const seqConfig = {
-    host: process.env.MYSQL_HOST || '127.0.0.1',
-    user: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASSWORD || '',
-    database: process.env.MYSQL_DATABASE || 'ectosense',
+    host: config.get('MYSQL_HOST') || '127.0.0.1',
+    user: config.get('MYSQL_USER') || 'root',
+    password: config.get('MYSQL_PASSWORD') || '',
+    database: config.get('MYSQL_DATABASE') || 'test',
     dialect: 'mysql',
     operatorsAliases: false,
-    port: process.env.MYSQL_PORT || 3306,
+    port: config.get('MYSQL_PORT') || 3306,
     define: { underscored: true },
     // logging: true,
     dialectOptions: {
