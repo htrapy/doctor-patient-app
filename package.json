@@ -32,7 +32,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "sequelize": "4.42.1",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "vision": "5.4.4"
   },
   "homepage": ""
